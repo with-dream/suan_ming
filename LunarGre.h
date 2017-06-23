@@ -25,4 +25,13 @@ void solar2lunar(calendar *);
  */
 void solar2lunarInfo(calendar *);
 
+
+/**
+ 24小时转为时辰
+
+ @param hour 24小时
+ @return 时辰 0-11
+ */
+int solar2shiChen(int hour);
+
 #endif /* LunarGre_h */

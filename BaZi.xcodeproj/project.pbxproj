@@ -13,6 +13,9 @@
 		4E0D3C901EE19DF100E48CF7 /* Config.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E0D3C8F1EE19DF100E48CF7 /* Config.c */; };
 		4E1173B41EE1684900ACA0D0 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E1173B31EE1684900ACA0D0 /* main.c */; };
 		4E1173BF1EE18D5200ACA0D0 /* SolarTermNew.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E1173BD1EE18D5200ACA0D0 /* SolarTermNew.c */; };
+		4E2B18981EF0DB1200BCD946 /* WuXing.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E2B18961EF0DB1200BCD946 /* WuXing.c */; };
+		4E2B18A01EF928E600BCD946 /* ZiWei.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E2B189E1EF928E600BCD946 /* ZiWei.c */; };
+		4E2B18A31EFA50A500BCD946 /* ZiWeiPan.c in Sources */ = {isa = PBXBuildFile; fileRef = 4E2B18A11EFA50A500BCD946 /* ZiWeiPan.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,6 +43,13 @@
 		4E1173BD1EE18D5200ACA0D0 /* SolarTermNew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = SolarTermNew.c; sourceTree = "<group>"; };
 		4E1173BE1EE18D5200ACA0D0 /* SolarTermNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SolarTermNew.h; sourceTree = "<group>"; };
 		4E1173C01EE18DE500ACA0D0 /* Config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		4E2149DC1EED4D5600F8EB2A /* bug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bug.h; sourceTree = "<group>"; };
+		4E2B18961EF0DB1200BCD946 /* WuXing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = WuXing.c; sourceTree = "<group>"; };
+		4E2B18971EF0DB1200BCD946 /* WuXing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WuXing.h; sourceTree = "<group>"; };
+		4E2B189E1EF928E600BCD946 /* ZiWei.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ZiWei.c; sourceTree = "<group>"; };
+		4E2B189F1EF928E600BCD946 /* ZiWei.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZiWei.h; sourceTree = "<group>"; };
+		4E2B18A11EFA50A500BCD946 /* ZiWeiPan.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ZiWeiPan.c; sourceTree = "<group>"; };
+		4E2B18A21EFA50A500BCD946 /* ZiWeiPan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZiWeiPan.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +66,13 @@
 		4E1173A71EE1684900ACA0D0 = {
 			isa = PBXGroup;
 			children = (
+				4E2B18A11EFA50A500BCD946 /* ZiWeiPan.c */,
+				4E2B18A21EFA50A500BCD946 /* ZiWeiPan.h */,
+				4E2B189E1EF928E600BCD946 /* ZiWei.c */,
+				4E2B189F1EF928E600BCD946 /* ZiWei.h */,
+				4E2B18961EF0DB1200BCD946 /* WuXing.c */,
+				4E2B18971EF0DB1200BCD946 /* WuXing.h */,
+				4E2149DC1EED4D5600F8EB2A /* bug.h */,
 				4E04AE261EEA8ACD00E56F24 /* BaZi.c */,
 				4E04AE271EEA8ACD00E56F24 /* BaZi.h */,
 				4E04AE231EE96BBD00E56F24 /* Constellation.c */,
@@ -144,10 +161,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E2B18A01EF928E600BCD946 /* ZiWei.c in Sources */,
 				4E1173B41EE1684900ACA0D0 /* main.c in Sources */,
 				4E04AE251EE96BBD00E56F24 /* Constellation.c in Sources */,
 				4E1173BF1EE18D5200ACA0D0 /* SolarTermNew.c in Sources */,
+				4E2B18981EF0DB1200BCD946 /* WuXing.c in Sources */,
 				4E04AE281EEA8ACD00E56F24 /* BaZi.c in Sources */,
+				4E2B18A31EFA50A500BCD946 /* ZiWeiPan.c in Sources */,
 				4E0D3C901EE19DF100E48CF7 /* Config.c in Sources */,
 				4E04AE171EE54BCE00E56F24 /* LunarGre.c in Sources */,
 			);

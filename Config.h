@@ -14,7 +14,6 @@
 #define true 1
 #define false 0
 
-
 #define LEN_D(__ARRAY__) sizeof(__ARRAY__)/sizeof(__ARRAY__[0])
 
 

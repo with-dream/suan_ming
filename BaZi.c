@@ -11,18 +11,6 @@
 #include "SolarTermNew.h"
 #include <stdarg.h>
 
-/**
- * 六十甲子
- */
-const char *jiazi[] = {
-    "甲子", "乙丑", "丙寅", "丁卯", "戊辰", "己巳", "庚午", "辛未", "壬申", "癸酉",
-    "甲戌", "乙亥", "丙子", "丁丑", "戊寅", "己卯", "庚辰", "辛巳", "壬午", "癸未",
-    "甲申", "乙酉", "丙戌", "丁亥", "戊子", "己丑", "庚寅", "辛卯", "壬辰", "癸巳",
-    "甲午", "乙未", "丙申", "丁酉", "戊戌", "己亥", "庚子", "辛丑", "壬寅", "癸卯",
-    "甲辰", "乙巳", "丙午", "丁未", "戊申", "己酉", "庚戌", "辛亥", "壬子", "癸丑",
-    "甲寅", "乙卯", "丙辰", "丁巳", "戊午", "己未", "庚申", "辛酉", "壬戌", "癸亥"
-};
-
 static char *shishen[] = {
     //    {"日/干", "甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸",
     /*"甲", */"比肩", "劫财", "食神", "伤官", "偏财", "正财", "七杀", "正官", "偏印", "正印",
@@ -38,6 +26,11 @@ static char *shishen[] = {
 
 static const char *gan[] = {"甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"};
 static const char *zhi[] = {"子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"};
+static int DAY[12]={31,28,31,30,31,30,31,31,30,31,30,31};
+/**
+ 十天干生旺死绝表 记录了子时的位置 从0计
+ */
+static const int shengWang[]={1, 6, 10, 9, 10, 9, 7, 0, 4, 3};
 
 //获取八字 所有月-1
 int getBaZi(int year, int month, int day, int hour, int gz[]){
@@ -126,6 +119,10 @@ int getBaZi(int year, int month, int day, int hour, int gz[]){
     //    printf("八字==>%s\n", bazi);
     
     return 0;
+}
+
+int getBaZiTm(struct tm *time, int *gzRt){
+    return getBaZi(time->tm_year, time->tm_mon+1, time->tm_mday, time->tm_hour,  gzRt);
 }
 
 //获取八字十神
@@ -219,4 +216,108 @@ void getDaYun(int *gz, int isShun, int *dayunRt){
 
 int isShun(int tg, sex){
     return ((sex&&!(tg%2)) || (!sex&&(tg%2)));
+}
+
+void jiaoDaYun(struct tm *birthday, struct tm *jieqi, int *dayun){
+    unsigned long birthdayTime = date2sec(birthday->tm_year, birthday->tm_mon, birthday->tm_mday, 0, 0, 0);
+    unsigned long jieQiTime = date2sec(jieqi->tm_year, jieqi->tm_mon, jieqi->tm_mday, 0, 0, 0);
+    
+    int dayOffset = abs(birthdayTime - jieQiTime)/(24*60*60);
+    
+    int minOffset = 0;
+    int hourOffset = 0;
+    if(birthdayTime < jieQiTime){   //顺
+        minOffset = (jieqi->tm_hour - birthday->tm_hour)*60 + (jieqi->tm_min - birthday->tm_min);
+    } else {        //逆
+        minOffset = (birthday->tm_hour - jieqi->tm_hour)*60 + (birthday->tm_min - jieqi->tm_min);
+    }
+    
+    //三天一岁 一天四个月 一个时辰十天 一小时五天 二十分钟一天
+    hourOffset = minOffset/2/60;
+    hourOffset += dayOffset*12;
+    
+    int day = hourOffset%12;
+    dayun[2] = (int)((day%3)*10) + ((minOffset%60)+10)/20;
+    
+    int mon = ((hourOffset/12)%3)*4 + day/3;
+    dayun[1] = mon%12;
+    
+    int year = hourOffset/12/3 + mon/12;
+    dayun[0] = year;
+    
+}
+
+void getShengWang(int *dayun, int tg, int *shengWangRt){
+    int i;
+    if(tg%2)    //阴
+        for(i=0; i<8; i++){
+            shengWangRt[i] = shengWang[tg]-dayun[i*2+1];
+            if(shengWangRt[i]<0)
+                shengWangRt[i] += 12;
+        }
+    else    //阳
+        for(i=0; i<8; i++)
+            shengWangRt[i] = (shengWang[tg]+dayun[i*2+1])%12;
+    
+}
+
+int getXingSu(int year, int mon, int day){
+    int days = 0;
+    int i =0;
+    int leap = isLeap(year);
+    
+    int leapDays = (year-1)/4 ;
+    if(leap && mon>2)
+        leapDays += 1;
+    if(year>1901 && year<2100)
+        leapDays -= 13;
+    
+    int monDay=0;
+    for (i=0; i<mon; i++) {
+        if(mon==1 && leap){
+            monDay += 29;
+            continue;
+        }
+        
+        monDay += DAY[i];
+    }
+    int baseDay = (year-1)*365 + monDay + day;
+    
+    days = baseDay + leapDays;
+    
+    return (23+days-1)%28;
+}
+
+int getNaYin(int tg, int dz){
+    for(int i=0;i<60;i++){
+        if(i%10==tg && i%12==dz){
+            if(i%2)
+                i--;
+            return i/2;
+        }
+    }
+    return -1;
+}
+
+int getMingGua(int year, int isMan){
+    int amend = year/100 - 1900/100;
+    int res = 0;
+    
+    if(isMan){
+        res = 100 - year%100;
+    } else {
+        res = year%100 - 4;
+    }
+    
+    res %= 9;
+    if(res == 0)
+        res /= 9;
+    
+    res += amend;
+    if(res == 0)
+        res = 8;
+    
+    if(res == 5)
+        res = isMan?2:8;
+    return res-1;
 }

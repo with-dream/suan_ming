@@ -338,3 +338,13 @@ void solar2lunarInfo(calendar *cal){
     strcpy(cal->zodiac, zodiac[gzYear%12]);
     //    printf("生肖==>%s\n", zodiac[gzYear%12]);
 }
+
+int solar2shiChen(int hour){
+    if(hour%2)
+        hour += 1;
+    
+    if(hour == 24)
+        hour = 0;
+    
+    return hour/2;
+}
